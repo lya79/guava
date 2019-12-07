@@ -6,7 +6,7 @@ Golang 1.11+
 
 clone專案
 ```shell
-git clone ... TODO
+git clone https://github.com/lya79/guava.git
 ```
 
 啟用 go module
@@ -27,7 +27,7 @@ PROJECT_ENV=local PROJECT_SITE=chatroom PROJECT_DEBUG=on go run .
 --- | --- | ---
 PROJECT_ENV | local | 服務執行的環境
 PROJECT_SITE | chatroom | 要執行的服務
-PROJECT_DEBUG | on | 是否開啟 `debug模式`, 如果沒帶 `on`參數就代表關閉 `debug模式`. `debug模式`開啟時才會輸出 debug訊息.
+PROJECT_DEBUG | on | 是否開啟 `debug模式`, 如果沒帶 `on`參數就代表關閉 `debug模式`. `debug模式`開啟時才會輸出 debug訊息.
 
 # 如何維護程式
 
@@ -51,7 +51,7 @@ import "module/database/internal/common/config"
 env := config.GetAppEnv() // 取得 PROJECT_ENV環境參數的值
 ```
 
-## log使用
+## log使用
 ```golang
 import "module/database/internal/common/logger"
 

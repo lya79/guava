@@ -48,7 +48,7 @@ port := config.GetConfig().Servers.Port
 ```golang
 import "module/database/internal/common/config"
 
-env := config.GetAppEnv() // 取得 PROJECT_ENV環境參數的值
+env := config.GetAppEnv()
 ```
 
 ## log使用

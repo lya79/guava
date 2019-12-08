@@ -10,7 +10,7 @@ type errorCode struct {
 	錯誤代碼設計分為三個區段
 	由左至右每4個代碼代表一個區段
 */
-var errorCodeMap = map[string]errorCode{
+var errorCodeMap = map[string]errorCode{ // TODO 需要修改語系字串
 	/*
 		通用的類別
 		00010001[0001-9999]

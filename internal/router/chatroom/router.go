@@ -2,6 +2,7 @@ package chatroom
 
 import (
 	"module/database/internal/handler/chatroom"
+	"module/database/internal/middleware/common"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,19 +13,10 @@ func Provider(engine *gin.Engine) { // TODO 實作 chatroom router
 }
 
 // SetAPIRouter 設定 API與 handler
-func setAPIRouter(engine *gin.Engine) {
-	mws := []gin.HandlerFunc{ // TODO 待確認 api router需要哪些中間件, 部分 API並不需要檢查 seesion, 例如註冊新會員
-		// gzip.Gzip(gzip.BestCompression),
-		// CheckClientIP(false),
-		// apiMiddleware.CheckLanguage,
-		// apiMiddleware.CheckSession,
-		// CheckAPIPermission,
-		// apiMiddleware.CheckSelfPermission,
-	}
-
+func setAPIRouter(engine *gin.Engine) { // TODO 待確認需要哪些中間件
 	api := engine.Group(
 		"/api",
-		mws...,
+		common.GetMiddlewareGroup()...,
 	)
 
 	/*

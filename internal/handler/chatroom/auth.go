@@ -1,6 +1,7 @@
 package chatroom
 
 import (
+	"module/database/internal/common/header"
 	"module/database/internal/common/i18n"
 	"net/http"
 
@@ -27,17 +28,10 @@ func Signup(c *gin.Context) {
 		UserRole int64 `json:"user_role" example:"2"`
 	}
 
-	// TODO 取得 lang從 header
-	lang := ""
-
-	// TODO 取得 時區從 header
-	// tz := ""
-
 	var input Input
-
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
-		Send(c, lang, "000100010002")
+		Send(c, "000100010002")
 		return
 	}
 
@@ -61,11 +55,12 @@ func Signup(c *gin.Context) {
 		}
 	*/
 
-	Send(c, lang, "000100020001")
+	Send(c, "000100020001")
 }
 
 // Send 回傳 API錯誤訊息
-func Send(c *gin.Context, lang string, code string) {
+func Send(c *gin.Context, code string) {
+	lang := header.GetLangHeader(c)
 	c.JSON(http.StatusOK, Response{
 		Code:    code,
 		Message: i18n.GetErrorMsg(lang, code),

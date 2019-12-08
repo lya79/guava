@@ -5,6 +5,12 @@ import (
 	"module/database/internal/common/logger"
 )
 
+const (
+	langEn = "en"
+	langTw = "tw"
+	langCn = "cn"
+)
+
 // GetErrorMsg 取得錯誤代碼對應的多語系訊息, lang參數傳入[en|tw|cn]
 func GetErrorMsg(lang, code string) string {
 	var msg string
@@ -21,11 +27,11 @@ func GetErrorMsg(lang, code string) string {
 		)
 	} else {
 		switch lang {
-		case "en":
+		case langEn:
 			msg = val.En
-		case "tw":
+		case langTw:
 			msg = val.Tw
-		case "cn":
+		case langCn:
 			msg = val.Cn
 		default:
 			msg = val.En

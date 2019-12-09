@@ -1,19 +1,11 @@
 package chatroom
 
 import (
-	"module/database/internal/common/header"
-	"module/database/internal/common/i18n"
-	"net/http"
+	"module/database/internal/common/auth"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
-
-// Response API回傳內容 // TODO 改放在通用程式碼目錄
-type Response struct {
-	Code    string
-	Message string
-	Result  interface{}
-}
 
 // Signup 註冊帳號
 func Signup(c *gin.Context) {
@@ -29,13 +21,49 @@ func Signup(c *gin.Context) {
 	}
 
 	var input Input
-	err := c.ShouldBindJSON(&input)
-	if err != nil {
-		Send(c, "000100010002")
-		return
+	{ // 解析傳遞的參數
+		err := c.ShouldBindJSON(&input)
+		if err != nil {
+			Send(c, "000100010002")
+			return
+		}
 	}
 
-	// TODO 檢查傳入的參數
+	{ // 檢查缺少傳入的參數
+		missingParams := []string{}
+		if strings.TrimSpace(input.Username) == "" {
+			missingParams = append(missingParams, "username")
+		}
+		if strings.TrimSpace(input.Password) == "" {
+			missingParams = append(missingParams, "password")
+		}
+		if strings.TrimSpace(input.Alias) == "" {
+			missingParams = append(missingParams, "alias")
+		}
+		if len(missingParams) > 0 {
+			Send(c, "000100010004")
+			return
+		}
+	}
+
+	{ // 檢查參數是否符合規則
+		if auth.IsVaildUsernameFormat(input.Username) {
+			Send(c, "000100010005")
+			return
+		}
+		if auth.IsVaildPasswordFormat(input.Password) {
+			Send(c, "000100010006")
+			return
+		}
+		if auth.IsVaildAliasFormat(input.Alias) {
+			Send(c, "000100010007")
+			return
+		}
+		if auth.IsVaildUserRole(input.UserRole) {
+			Send(c, "000100010008")
+			return
+		}
+	}
 
 	// TODO 執行註冊帳號
 	/*
@@ -56,13 +84,4 @@ func Signup(c *gin.Context) {
 	*/
 
 	Send(c, "000100020001")
-}
-
-// Send 回傳 API錯誤訊息
-func Send(c *gin.Context, code string) {
-	lang := header.GetLangHeader(c)
-	c.JSON(http.StatusOK, Response{
-		Code:    code,
-		Message: i18n.GetErrorMsg(lang, code),
-	})
 }

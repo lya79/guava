@@ -20,11 +20,6 @@ func setAPIRouter(engine *gin.Engine) { // TODO 待確認需要哪些中間件
 	)
 
 	/*
-		測試用途 API
-	*/
-	api.GET("/echo", chatroom.Echo)
-
-	/*
 		語系與時區 API
 	*/
 	// api.POST("/personalization/lang", chatroom.Signup)   // 語系

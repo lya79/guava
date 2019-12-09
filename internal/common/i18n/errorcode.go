@@ -18,6 +18,11 @@ var errorCodeMap = map[string]errorCode{ // TODO 需要修改語系字串
 	"000100010001": errorCode{En: "錯誤代碼尚未定義", Tw: "錯誤代碼尚未定義", Cn: "錯誤代碼尚未定義"},
 	"000100010002": errorCode{En: "JSON格式錯誤", Tw: "JSON格式錯誤", Cn: "JSON格式錯誤"},
 	"000100010003": errorCode{En: "API權限不足", Tw: "API權限不足", Cn: "API權限不足"},
+	"000100010004": errorCode{En: "缺少傳入參數", Tw: "缺少傳入參數", Cn: "缺少傳入參數"},
+	"000100010005": errorCode{En: "無效的 username", Tw: "無效的 username", Cn: "無效的 username"},
+	"000100010006": errorCode{En: "無效的 password", Tw: "無效的 password", Cn: "無效的 password"},
+	"000100010007": errorCode{En: "無效的 alias", Tw: "無效的 alias", Cn: "無效的 alias"},
+	"000100010008": errorCode{En: "無效的使用者階層", Tw: "無效的使用者階層", Cn: "無效的使用者階層"},
 
 	/*
 		身份驗證類別

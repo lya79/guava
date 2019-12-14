@@ -1,16 +1,27 @@
 package logger
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
 
+const (
+	color_red     = uint8(iota + 91) // warn
+	color_green                      // info
+	color_yellow                     // debug
+	color_blue                       //trace
+	color_magenta                    // fatal
+)
 const (
 	// INFO 用於描述應用運行過程
 	INFO = "[INFO]"
 
 	// DEBUG 除錯用途訊息
 	DEBUG = "[DEBUG]"
+
+	// TRACE 除錯用途訊息
+	TRACE = "[TRACE]"
 
 	// WARN 存在潛在的問題
 	WARN = "[WARN]"
@@ -33,12 +44,28 @@ func init() {
 func SetPrefix(str string) {
 	prefix = str
 	setInfoLevel(str)
-	enableLevel(WARN, FATAL)
+	enableLevel(TRACE, WARN, FATAL)
 }
 
 func setInfoLevel(str string) {
-	log.SetPrefix(str + INFO + " ")
+	log.SetPrefix(str + initColor(INFO, INFO) + " ")
 	log.Println("logger level啟用:", INFO)
+}
+
+func initColor(level string, tag string) string {
+	switch level {
+	case INFO:
+		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_green, tag)
+	case DEBUG:
+		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_yellow, tag)
+	case TRACE:
+		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_blue, tag)
+	case WARN:
+		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_red, tag)
+	case FATAL:
+		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_magenta, tag)
+	}
+	return tag
 }
 
 // EnableDebug 啟用指定 debug level
@@ -51,7 +78,7 @@ func enableLevel(levels ...string) {
 	for i := range levels {
 		level := levels[i]
 		if _, ok := loggerMap[level]; !ok {
-			loggerMap[level] = log.New(os.Stdout, prefix+level+" ", log.Ldate|log.Lmicroseconds|log.Llongfile)
+			loggerMap[level] = log.New(os.Stdout, prefix+initColor(level, level)+" ", log.Ldate|log.Lmicroseconds|log.Llongfile)
 			log.Println("logger level啟用:", level)
 		}
 	}
@@ -71,5 +98,5 @@ func Println(level string, str string, f func(logger *log.Logger, str string)) {
 }
 
 func validLevel(level string) bool {
-	return level == DEBUG || level == WARN || level == FATAL
+	return level == DEBUG || level == TRACE || level == WARN || level == FATAL
 }

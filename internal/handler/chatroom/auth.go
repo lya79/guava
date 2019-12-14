@@ -1,11 +1,54 @@
 package chatroom
 
 import (
+	"log"
 	"module/database/internal/common/auth"
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
+
+// Echo 回傳時間
+func Echo(c *gin.Context) {
+	// c.JSON(http.StatusOK, Response{
+	// 	// Code:    code,
+	// 	// Message: i18n.GetErrorMsg(lang, code),
+	// 	Result: time.Now(),
+	// })
+
+	db, err := gorm.Open(
+		"mysql",
+		getConnectName(
+			"mysql",
+			"3306",
+			"PEPPER",
+			"root",
+			"qwe123",
+		),
+	)
+	defer db.Close()
+	if err != nil {
+		log.Println("gorm.Open: err:", err)
+		c.JSON(http.StatusOK, Response{
+			// Code:    code,
+			// Message: i18n.GetErrorMsg(lang, code),
+			Result: "gorm.Open: err:" + err.Error(),
+		})
+		return
+	}
+	log.Println("gorm.Open: ok:")
+	c.JSON(http.StatusOK, Response{
+		// Code:    code,
+		// Message: i18n.GetErrorMsg(lang, code),
+		Result: "gorm.Open: ok",
+	})
+}
+
+func getConnectName(host, port, database, username, password string) string {
+	return username + ":" + password + "@tcp(" + host + ":" + port + ")/" + database + "?charset=utf8&parseTime=True&loc=Asia%2FTaipei"
+}
 
 // Signup 註冊帳號
 func Signup(c *gin.Context) {
@@ -65,23 +108,18 @@ func Signup(c *gin.Context) {
 		}
 	}
 
-	// TODO 執行註冊帳號
-	/*
-		如果要註冊管理者帳號, 就需要先驗證操作者是否管理者
-		if Input.UserRole = 1 {
-			operator := GetOperator(c) // 取得 登入者資料從 session
-			if !operator.IsAdmin(){
-				Send(c, lang, "000100010003")
-				return
-			}
-			...
+	{ // 註冊新帳號
+		if auth.IsAdminUserRole(input.UserRole) { // 只有登入中的管理者才可以註冊新的管理者帳號
+			//  operator := GetOperator(c) // 取得 登入者資料從 session
+			// 	if !operator.IsAdmin(){
+			// 		Send(c, lang, "000100010003")
+			// 		return
+			// 	}
+			// 	...
+		} else if auth.IsUserUserRole(input.UserRole) {
 		}
 
-		如果註冊會員帳號, 不需要驗證操作者是否管理者
-		if Input.UserRole = 2 {
-			...
-		}
-	*/
+	}
 
 	Send(c, "000100020001")
 }

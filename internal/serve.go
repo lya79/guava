@@ -35,8 +35,7 @@ func NewEngine() *gin.Engine {
 
 // Listener 啟動服務
 func Listener(engine *gin.Engine) {
-	serv := config.GetConfig().Servers
-	addr := serv.Host + ":" + serv.Port
+	addr := config.GetAppHost() + ":" + config.GetAppPort()
 
 	// 建立 Server
 	srv := &http.Server{ // TODO 待確認 http.Server設定
@@ -96,6 +95,5 @@ func SetRouter(engine *gin.Engine) {
 	default:
 		log.Fatalf("無效的服務名稱 %v", name)
 	}
-	c := config.GetConfig()
-	log.Printf("啟動 %v服務 %v:%v", name, c.Servers.Host, c.Servers.Port)
+	log.Printf("啟動 %v服務 %v:%v", name, config.GetAppHost(), config.GetAppPort())
 }

@@ -16,14 +16,14 @@ var conf *Config
 
 // Config 設定檔
 type Config struct {
-	Servers Servers `toml:"servers"`
+	// Servers Servers `toml:"servers"`
 }
 
 // Servers 服務器設定
-type Servers struct {
-	Host string `toml:"host"`
-	Port string `toml:"port"`
-}
+// type Servers struct {
+// 	Host string `toml:"host"`
+// 	Port string `toml:"port"`
+// }
 
 func init() {
 	load()
@@ -81,6 +81,41 @@ func GetAppSite() string {
 // GetAppDebug 取得是否開啟 debug
 func GetAppDebug() string {
 	return os.Getenv("PROJECT_DEBUG")
+}
+
+// GetAppMysqlUser 取得 mysql帳號
+func GetAppMysqlUser() string {
+	return os.Getenv("PROJECT_MYSQL_USER")
+}
+
+// GetAppMysqlPwd 取得 mysql密碼
+func GetAppMysqlPwd() string {
+	return os.Getenv("PROJECT_MYSQL_ROOT_PASSWORD")
+}
+
+// GetAppMysqlDB 取得 mysql db
+func GetAppMysqlDB() string {
+	return os.Getenv("PROJECT_MYSQL_DATABASE")
+}
+
+// GetAppMysqlHost 取得 mysql host
+func GetAppMysqlHost() string {
+	return os.Getenv("PROJECT_MYSQL_HOST")
+}
+
+// GetAppMysqlPort 取得 mysql port
+func GetAppMysqlPort() string {
+	return os.Getenv("PROJECT_MYSQL_PORT")
+}
+
+// GetAppHost 取得服務 host
+func GetAppHost() string {
+	return os.Getenv("PROJECT_APP_HOST")
+}
+
+// GetAppPort 取得服務 port
+func GetAppPort() string {
+	return os.Getenv("PROJECT_APP_PORT")
 }
 
 // GetPathOfConfig 取得專案的設定檔案

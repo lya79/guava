@@ -1,0 +1,74 @@
+version: "3"
+services:
+    chatroom:
+        build: .
+        ports:
+            - "8080:8080"
+        environment:
+            - PROJECT_ENV=local
+            - PROJECT_SITE=chatroom
+            - PROJECT_DEBUG=on
+            - PROJECT_APP_HOST=0.0.0.0
+            - PROJECT_APP_PORT=8080
+            
+            - PROJECT_MYSQL_USER=root
+            - PROJECT_MYSQL_ROOT_PASSWORD=qwe123
+            - PROJECT_MYSQL_DATABASE=PEPPER
+            - PROJECT_MYSQL_HOST=0.0.0.0
+            - PROJECT_MYSQL_PORT=3306
+        networks:
+            - internal_network
+    mysql:
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+        # volumes:
+        #     - db:/var/lib/mysql
+        environment:
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: qwe123
+            MYSQL_DATABASE: PEPPER
+        networks:
+            - internal_network
+
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+        # volumes:
+        #     - cache:/data
+        networks:
+            - internal_network
+
+    # Database GUI
+    adminer:
+        image: adminer
+        ports:
+            - "3300:8080"
+        networks:
+            - internal_network
+            - external_network
+
+    redis-admin:
+        image: rediscommander/redis-commander
+        ports:
+            - "3200:8081"
+        environment:
+            - REDIS_HOSTS=in-redis:redis:6379:0
+        depends_on:
+            - redis
+        networks:
+            - internal_network
+            - external_network
+
+# volumes:
+#     cache:
+#         driver: "local"
+#     db:
+#         driver: "local"
+
+networks:
+    external_network:
+        driver: bridge
+    internal_network:
+        driver: bridge

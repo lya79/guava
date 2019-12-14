@@ -9,7 +9,7 @@ import (
 )
 
 // Response API回傳內容
-type Response struct {
+type Response struct { // TODO json tag
 	Code    string
 	Message string
 	Result  interface{}

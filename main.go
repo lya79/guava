@@ -1,11 +1,10 @@
 package main
 
 import (
-	"log"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"module/database/internal"
 	"module/database/internal/common/config"
 	"module/database/internal/common/logger"
-	"runtime"
 )
 
 func init() {
@@ -14,7 +13,7 @@ func init() {
 		logger.EnableDebug()
 	}
 
-	log.Printf("GOMAXPROCS: %v", runtime.GOMAXPROCS(runtime.NumCPU()))
+	// log.Printf("GOMAXPROCS: %v", runtime.GOMAXPROCS(runtime.NumCPU())) // TODO 待確認是否需要多核心
 }
 
 func main() {

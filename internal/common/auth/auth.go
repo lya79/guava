@@ -15,13 +15,13 @@ func IsVaildUserRole(userRole int64) bool {
 	return true
 }
 
-// IsAdmin 檢查是否為管理員
-func IsAdmin(userRole int64) bool {
+// IsAdminUserRole 檢查是否為管理員
+func IsAdminUserRole(userRole int64) bool {
 	return userRole == userRoleOfAdmin
 }
 
-// IsUser 檢查是否為會員
-func IsUser(userRole int64) bool {
+// IsUserUserRole 檢查是否為會員
+func IsUserUserRole(userRole int64) bool {
 	return userRole == userRoleOfUser
 }
 

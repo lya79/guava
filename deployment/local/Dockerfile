@@ -1,6 +1,7 @@
 FROM golang:1.13-alpine AS builder
 
-COPY . /go/src/guava
+# TODO 目前路徑有錯誤
+COPY . /go/src/guava 
 WORKDIR /go/src/guava
 RUN go build -mod vendor -o server .
 

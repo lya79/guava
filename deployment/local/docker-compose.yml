@@ -48,7 +48,7 @@ services:
     # 本機端服務
     local-chatroom:
         build: 
-            context: .
+            context: ./../../.
             dockerfile: ./deployment/local/Dockerfile
         ports:
             - "8080:8080"

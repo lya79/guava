@@ -25,7 +25,7 @@ go mod vendor
 
 ## 服務執行
 ```shell
-docker-compose up -d
+docker-compose -f ./deployment/local/docker-compose.yml up -d
 ```
 
 ## log使用

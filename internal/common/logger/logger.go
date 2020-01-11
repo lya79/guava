@@ -61,7 +61,7 @@ func initColor(level string, tag string) string {
 	case TRACE:
 		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_blue, tag)
 	case WARN:
-		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_red, tag)
+		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", uint8(91), tag)
 	case FATAL:
 		return fmt.Sprintf("\x1b[%dm%s\x1b[0m", color_magenta, tag)
 	}

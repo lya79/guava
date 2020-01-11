@@ -23,6 +23,11 @@ var errorCodeMap = map[string]errorCode{ // TODO 需要修改語系字串
 	"000100010006": errorCode{En: "無效的 password", Tw: "無效的 password", Cn: "無效的 password"},
 	"000100010007": errorCode{En: "無效的 alias", Tw: "無效的 alias", Cn: "無效的 alias"},
 	"000100010008": errorCode{En: "無效的使用者階層", Tw: "無效的使用者階層", Cn: "無效的使用者階層"},
+	"000100010009": errorCode{En: "無法建立 db連線", Tw: "無法建立 db連線", Cn: "無法建立 db連線"},
+	"000100010010": errorCode{En: "無法初始化資料表", Tw: "無法建立初始化資料表", Cn: "無法建立初始化資料表"},
+	"000100010011": errorCode{En: "資料解析錯誤", Tw: "資料解析錯誤", Cn: "資料解析錯誤"},
+	"000100010012": errorCode{En: "資料加密失敗", Tw: "資料加密失敗", Cn: "資料加密失敗"},
+	"000100010013": errorCode{En: "資料無法寫入 db", Tw: "資料無法寫入 db", Cn: "資料無法寫入 db"},
 
 	/*
 		身份驗證類別

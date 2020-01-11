@@ -68,8 +68,16 @@ func GetAppRoot() (string, error) {
 	return root, err
 }
 
-// GetAppEnv 取得環境變數
-func GetAppEnv() string {
+// IsLocalByProjectEnv 是否為本機端環境
+func IsLocalByProjectEnv() bool {
+	if getAppEnv() == "local" {
+		return true
+	}
+	return false
+}
+
+// getAppEnv 取得環境變數
+func getAppEnv() string {
 	return os.Getenv("PROJECT_ENV")
 }
 
@@ -125,21 +133,10 @@ func GetPathOfConfig() (string, error) {
 		return "", err
 	}
 
-	// TODO 改寫 設定檔讀取方式
-	/*
-		可以用 ImportDir改寫, 避免寫死目錄與檔案名稱名稱
-
-		pkgInfo, err := build.ImportDir(".", 0)
-		if err != nil {
-			log.Fatalf("讀取 config路徑錯誤： %v", err)
-		}
-		pkgInfo...
-	*/
-
 	sp := string(os.PathSeparator)
 	path := root + sp
 	path += "configs" + sp
-	path += GetAppEnv() + sp
+	path += getAppEnv() + sp
 	path += GetAppSite() + ".toml"
 
 	return path, err

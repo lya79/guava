@@ -22,7 +22,7 @@ func NewEngine() *gin.Engine {
 	engine := gin.New()
 
 	mws := []gin.HandlerFunc{gin.Recovery()}
-	if config.GetAppEnv() == "local" {
+	if config.IsLocalByProjectEnv() {
 		mws = append(mws, gin.Logger())
 	}
 	engine.Use(mws...)

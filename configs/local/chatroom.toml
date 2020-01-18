@@ -1,1 +1,21 @@
-# 用來設定服務內的功能
+[chatroom]
+host = "0.0.0.0"
+port = 8080 
+
+[mysql]
+host = "mysql" 
+port = 3306 
+user = "root" 
+password = "qwe123"
+database = "chatroom"
+logMode = true
+maxIdleConns = 10
+maxOpenConns = 10
+connMaxLifetime = 5 # minute
+
+[redis]
+host = "redis" 
+port = 6379 
+password = ""
+pool_size = 10
+idle_timeout = 5 # minute

@@ -3,7 +3,8 @@ package chatroom
 import (
 	"log"
 	"module/database/internal/common/auth"
-	"module/database/internal/repository/mysql"
+	"module/database/internal/common/db"
+	"module/database/internal/repository"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -92,14 +93,14 @@ func bussiness(input input) (string, error) {
 		encryptionPwd = pwd
 	}
 
-	db, err := mysql.GetConnection()
+	db, err := db.GetConnection()
 	if err != nil {
 		if err != nil {
 			return "", err // TODO 錯誤代碼
 		}
 	}
 
-	return mysql.CreateAccount(
+	return repository.CreateAccount(
 		db,
 		input.UserRole,
 		input.Username,

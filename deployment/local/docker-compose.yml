@@ -55,14 +55,6 @@ services:
         environment:
             - PROJECT_ENV=local # 本機端測試
             - PROJECT_SITE=chatroom # 站別
-            - PROJECT_DEBUG=on # 是否開啟 debug模式
-            - PROJECT_APP_HOST=0.0.0.0 # 服務器位址
-            - PROJECT_APP_PORT=8080 # 服務器 Port
-            - PROJECT_MYSQL_USER=root # Mysql帳號
-            - PROJECT_MYSQL_ROOT_PASSWORD=qwe123 # Mysql密碼
-            - PROJECT_MYSQL_DATABASE=chatroom # Mysql db名稱
-            - PROJECT_MYSQL_HOST=mysql # Mysql服務器位址
-            - PROJECT_MYSQL_PORT=3306 # Mysql服務器 Port
         depends_on:
             - adminer
             - redis-admin

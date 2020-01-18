@@ -18,13 +18,7 @@ func GetErrorMsg(lang, code string) string {
 	val, ok := errorCodeMap[code]
 	if !ok {
 		msg = errorCodeMap["000100010001"].En
-		logger.Println(
-			logger.WARN,
-			msg+"(code:"+code+")",
-			func(logger *log.Logger, str string) {
-				logger.Println(str)
-			},
-		)
+		log.Println(logger.WARN, msg+"(code:"+code+")")
 	} else {
 		switch lang {
 		case langEn:

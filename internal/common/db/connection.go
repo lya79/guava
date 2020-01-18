@@ -1,4 +1,4 @@
-package mysql
+package db
 
 //	特點:
 //	*.可多次重啟連線

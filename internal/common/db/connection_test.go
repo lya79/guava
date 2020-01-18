@@ -1,4 +1,4 @@
-package mysql
+package db
 
 import (
 	"math/rand"
@@ -10,15 +10,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-/*
-測試指令
-go test -coverprofile=./test.out ./internal/common/mysql/
-
-查看覆蓋率
-go tool cover -html ./test.out
-*/
-
-func Test_restart(t *testing.T) {
+func Test_GetConnection(t *testing.T) {
 	for i := 0; i < 3; i++ {
 		setting := Setting{
 			host:            "mysql",

@@ -1,18 +1,15 @@
 package main
 
 import (
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"log"
 	"module/database/internal"
 	"module/database/internal/common/config"
-	"module/database/internal/common/logger"
+
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func init() {
-	logger.SetPrefix("[" + config.GetAppSite() + "]")
-	if config.GetAppDebug() == config.DEBUG {
-		logger.EnableDebug()
-	}
-
+	log.SetPrefix("[" + config.GetAppSite() + "]")
 	// log.Printf("GOMAXPROCS: %v", runtime.GOMAXPROCS(runtime.NumCPU())) // TODO 待確認是否需要多核心
 }
 

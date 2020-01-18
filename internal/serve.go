@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -22,7 +23,7 @@ func NewEngine() *gin.Engine {
 	engine := gin.New()
 
 	mws := []gin.HandlerFunc{gin.Recovery()}
-	if config.IsLocalByProjectEnv() {
+	if config.IsLocalEnv() {
 		mws = append(mws, gin.Logger())
 	}
 	engine.Use(mws...)
@@ -35,7 +36,8 @@ func NewEngine() *gin.Engine {
 
 // Listener 啟動服務
 func Listener(engine *gin.Engine) {
-	addr := config.GetAppHost() + ":" + config.GetAppPort()
+	addr := config.GetConfig().Chatroom.Host
+	addr += ":" + strconv.FormatInt(config.GetConfig().Chatroom.Port, 10)
 
 	// 建立 Server
 	srv := &http.Server{ // TODO 待確認 http.Server設定
@@ -53,13 +55,7 @@ func Listener(engine *gin.Engine) {
 		if err != nil {
 			msg += " error:" + err.Error()
 		}
-		logger.Println(
-			logger.WARN,
-			msg,
-			func(logger *log.Logger, str string) {
-				logger.Println(str)
-			},
-		)
+		log.Println(logger.WARN, msg)
 	}()
 
 	// graceful shutdown
@@ -77,13 +73,7 @@ func Listener(engine *gin.Engine) {
 	if err != nil {
 		msg += " error:" + err.Error()
 	}
-	logger.Println(
-		logger.WARN,
-		msg,
-		func(logger *log.Logger, str string) {
-			logger.Println(str)
-		},
-	)
+	log.Println(logger.WARN, msg)
 }
 
 // SetRouter 設定 Router
@@ -95,5 +85,5 @@ func SetRouter(engine *gin.Engine) {
 	default:
 		log.Fatalf("無效的服務名稱 %v", name)
 	}
-	log.Printf("啟動 %v服務 %v:%v", name, config.GetAppHost(), config.GetAppPort())
+	log.Printf("啟動 %v服務 %v:%v", name, config.GetConfig().Chatroom.Host, config.GetConfig().Chatroom.Port)
 }

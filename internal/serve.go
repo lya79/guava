@@ -3,9 +3,9 @@ package internal
 import (
 	"context"
 	"log"
-	"module/database/internal/common/config"
-	"module/database/internal/common/logger"
-	"module/database/internal/router/chatroom"
+	"github.com/lya79/guava/internal/common/config"
+	"github.com/lya79/guava/internal/common/logger"
+	"github.com/lya79/guava/internal/router/chatroom"
 	"net/http"
 	"os"
 	"os/signal"

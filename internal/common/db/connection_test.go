@@ -2,7 +2,7 @@ package db
 
 import (
 	"math/rand"
-	"module/database/internal/repository"
+	"github.com/lya79/guava/internal/repository"
 	"testing"
 	"time"
 

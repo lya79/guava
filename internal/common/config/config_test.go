@@ -24,12 +24,6 @@ func Test_IsLocalEnv(t *testing.T) {
 	}
 }
 
-func Test_IsDebugMode(t *testing.T) {
-	if !IsDebugMode() {
-		t.Error("IsDebugMode false")
-	}
-}
-
 func Test_GetAppSite(t *testing.T) {
 	if GetAppSite() != "chatroom" {
 		t.Error("GetAppSite != chatroom")

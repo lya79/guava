@@ -2,10 +2,10 @@ package main
 
 import (
 	"log"
-	"module/database/internal"
-	"module/database/internal/common/config"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/lya79/guava/internal"
+	"github.com/lya79/guava/internal/common/config"
 )
 
 func init() {

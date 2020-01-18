@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"github.com/jinzhu/gorm"
 )
 
@@ -28,19 +29,19 @@ func CreateAccount(
 	alias string,
 	encryptionPwd string,
 	permisson string,
-) (string, error) {
-	// record := Account{
-	// 	UserRole:  userRole,
-	// 	Username:  username,
-	// 	Alias:     alias,
-	// 	Enable:    1,
-	// 	Permisson: permisson,
-	// 	Password:  encryptionPwd,
-	// }
+) error {
+	record := Account{
+		UserRole:  userRole,
+		Username:  username,
+		Alias:     alias,
+		Enable:    1,
+		Permisson: permisson,
+		Password:  encryptionPwd,
+	}
 
-	// if err := db.Create(&record).Error; err != nil {
-	// 	return "000100010013", err
-	// }
+	if err := db.Create(&record).Error; err != nil {
+		return errors.New("會員建立失敗, err:" + err.Error())
+	}
 
-	return "", nil
+	return nil
 }

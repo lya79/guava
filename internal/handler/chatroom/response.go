@@ -1,8 +1,8 @@
 package chatroom
 
 import (
-	"module/database/internal/common/header"
-	"module/database/internal/common/i18n"
+	"github.com/lya79/guava/internal/common/header"
+	"github.com/lya79/guava/internal/common/i18n"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

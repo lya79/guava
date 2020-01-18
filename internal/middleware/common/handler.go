@@ -1,7 +1,7 @@
 package common
 
 import (
-	"module/database/internal/common/header"
+	"github.com/lya79/guava/internal/common/header"
 
 	"github.com/gin-gonic/gin"
 )

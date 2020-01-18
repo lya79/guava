@@ -28,6 +28,7 @@ var errorCodeMap = map[string]errorCode{ // TODO 需要修改語系字串
 	"000100010011": errorCode{En: "資料解析錯誤", Tw: "資料解析錯誤", Cn: "資料解析錯誤"},
 	"000100010012": errorCode{En: "資料加密失敗", Tw: "資料加密失敗", Cn: "資料加密失敗"},
 	"000100010013": errorCode{En: "資料無法寫入 db", Tw: "資料無法寫入 db", Cn: "資料無法寫入 db"},
+	"000100010014": errorCode{En: "db連線取得失敗", Tw: "db連線取得失敗", Cn: "db連線取得失敗"},
 
 	/*
 		身份驗證類別
@@ -35,4 +36,5 @@ var errorCodeMap = map[string]errorCode{ // TODO 需要修改語系字串
 	*/
 	"000100020001": errorCode{En: "帳號註冊成功", Tw: "帳號註冊成功", Cn: "帳號註冊成功"},
 	"000100020002": errorCode{En: "帳號名稱已經存在", Tw: "帳號名稱已經存在", Cn: "帳號名稱已經存在"},
+	"000100020003": errorCode{En: "帳號註冊失敗", Tw: "帳號註冊失敗", Cn: "帳號註冊失敗"},
 }

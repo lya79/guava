@@ -1,8 +1,8 @@
 package chatroom
 
 import (
-	"module/database/internal/handler/chatroom"
-	"module/database/internal/middleware/common"
+	"github.com/lya79/guava/internal/handler/chatroom"
+	"github.com/lya79/guava/internal/middleware/common"
 
 	"github.com/gin-gonic/gin"
 )

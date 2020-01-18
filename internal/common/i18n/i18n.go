@@ -2,7 +2,7 @@ package i18n
 
 import (
 	"log"
-	"module/database/internal/common/logger"
+	"github.com/lya79/guava/internal/common/logger"
 )
 
 const (

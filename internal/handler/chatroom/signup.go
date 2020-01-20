@@ -2,16 +2,18 @@ package chatroom
 
 import (
 	"log"
+	"strings"
+
+	"github.com/jinzhu/gorm"
 	"github.com/lya79/guava/internal/common/auth"
 	"github.com/lya79/guava/internal/common/db"
 	"github.com/lya79/guava/internal/repository"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-// SignupInput 註冊會員、管理員
-type SignupInput struct {
+// signupInput 註冊會員、管理員
+type signupInput struct {
 	// 名稱
 	Username string `json:"username" example:"yuan"`
 	// 密碼
@@ -24,7 +26,7 @@ type SignupInput struct {
 
 // Signup 註冊帳號
 func Signup(c *gin.Context) {
-	var input SignupInput
+	var input signupInput
 	{ // 解析傳遞的參數
 		err := c.ShouldBindJSON(&input)
 		if err != nil {
@@ -33,7 +35,7 @@ func Signup(c *gin.Context) {
 		}
 	}
 
-	bussiness := func(input SignupInput) (string, error) {
+	bussiness := func(input signupInput) (string, error) {
 		{ // 檢查缺少傳入的參數
 			missingParams := []string{}
 			if strings.TrimSpace(input.Username) == "" {
@@ -84,21 +86,25 @@ func Signup(c *gin.Context) {
 			encryptionPwd = pwd
 		}
 
-		db, err := db.GetConnection()
-		if err != nil {
-			return "000100010014", err
+		var gormDB *gorm.DB
+		{ //取得 db連線
+			var err error
+			if gormDB, err = db.GetConnection(); err != nil {
+				return "000100010014", err
+			}
 		}
 
-		err = repository.CreateAccount(
-			db,
-			input.UserRole,
-			input.Username,
-			input.Alias,
-			encryptionPwd,
-			permisson,
-		)
-		if err != nil {
-			return "000100020003", err
+		{ // 建立新帳號
+			if err := repository.CreateAccount(
+				gormDB,
+				input.UserRole,
+				input.Username,
+				input.Alias,
+				encryptionPwd,
+				permisson,
+			); err != nil {
+				return "000100020003", err
+			}
 		}
 
 		return "", nil

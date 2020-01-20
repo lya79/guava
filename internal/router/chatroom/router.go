@@ -28,14 +28,14 @@ func setAPIRouter(engine *gin.Engine) { // TODO 待確認需要哪些中間件
 	/*
 		身份驗證 API
 	*/
-	api.POST("/auth/signup", chatroom.Signup) // 註冊
-	// api.POST("/auth/update/pwd", chatroom.Echo) // 更新密碼
-	// api.POST("/auth/login", chatroom.Echo)      // 登入
-	// api.POST("/auth/logout", chatroom.Echo)     // 登出
 
 	/*
 		帳號管理 API
 	*/
+	api.POST("/account/signup", chatroom.Signup) // 註冊
+	// api.POST("/account/update/pwd", chatroom.Echo) // 更新密碼
+	// api.POST("/account/login", chatroom.Echo)      // 登入
+	// api.POST("/account/logout", chatroom.Echo)     // 登出
 	// api.POST("/account/online-account-list", chatroom.Echo) // 在線用戶清單(管理者、會員)
 	// api.POST("/account/force-logout", chatroom.Echo)        // 強制登出指定用戶(管理者、會員)
 

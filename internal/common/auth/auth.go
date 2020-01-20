@@ -60,12 +60,3 @@ func Encryption(pwd string) (string, error) {
 	}
 	return string(hash), nil
 }
-
-// CheckPassword 檢查密碼
-func CheckPassword(pwd string) (bool, error) {
-	hash, err := Encryption(pwd)
-	if err != nil {
-		return false, err
-	}
-	return pwd == string(hash), err
-}

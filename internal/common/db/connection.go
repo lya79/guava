@@ -66,7 +66,7 @@ func PutConnection() error {
 }
 
 // Close 關閉 db連線
-func Close() error { // 服務器關閉時需要呼叫
+func Close() error { // TODO 服務器關閉時需要呼叫
 	dbMutex.L.Lock()
 	defer dbMutex.L.Unlock()
 

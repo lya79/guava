@@ -11,6 +11,9 @@ import (
 2.行為紀錄資料表(描述每一個帳戶執行任何API的紀錄, 包含紀錄傳遞的參數還有回傳的參數)
 */
 
+const account = "account" // 資料表名稱
+
+// Account 帳戶資料表
 type Account struct {
 	gorm.Model
 	UserRole  int    `gorm:"column:user_role;type:int(2);NOT NULL;DEFAULT:1"` // 權限階層, 1:admin, 2:member
@@ -39,9 +42,30 @@ func CreateAccount(
 		Password:  encryptionPwd,
 	}
 
-	if err := db.Create(&record).Error; err != nil {
-		return errors.New("會員建立失敗, err:" + err.Error())
+	if err := db.Table(account).Create(&record).Error; err != nil {
+		return errors.New("帳戶建立失敗, err:" + err.Error())
 	}
 
 	return nil
+}
+
+// CheckAccountPwd 查詢指定帳戶是否存在
+func CheckAccountPwd(
+	db *gorm.DB,
+	userRole int,
+	username string,
+	encryptionPwd string,
+) (bool, error) {
+	var accountArr []Account
+	if err := db.Table(account).
+		Where("`user_role` = ?", userRole).
+		Where("`username` = ?", username).
+		Where("`password` = ?", encryptionPwd).
+		Find(&accountArr).Error; err != nil {
+		return false, errors.New("帳戶查詢失敗, err:" + err.Error())
+	}
+	if len(accountArr) != 1 {
+		return false, errors.New("帳戶查詢失敗, err: len(accountArr)!=1")
+	}
+	return true, nil
 }

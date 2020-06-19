@@ -29,20 +29,28 @@ test: install
 	PROJECT_ROOT=$(shell pwd) PROJECT_ENV=local PROJECT_SITE=chatroom go test -v ./...
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) down 
 
-up: install test
+up: test
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) up -d
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) ps
 
-down: install 
+down: 
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) down 
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) ps
 
-build: install test 
+build: test 
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) up -d --build
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) ps
 
-run: install test 
+run: test 
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) up -d mysql redis 
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) up -d adminer redis-admin 
 	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) ps
 	PROJECT_ROOT=$(shell pwd) PROJECT_ENV=local PROJECT_SITE=chatroom go run .
+
+db: 
+	go vet ./...
+	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) up -d mysql redis 
+	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) up -d adminer redis-admin 
+
+ps:
+	docker-compose -f $(PATH_OF_DOCKER_COMPOSE_YML) ps

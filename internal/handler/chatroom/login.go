@@ -5,7 +5,10 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/lya79/guava/internal/common/auth"
+	"github.com/lya79/guava/internal/common/db"
+	"github.com/lya79/guava/internal/repository"
 )
 
 type loginInput struct {
@@ -64,25 +67,40 @@ func Login(c *gin.Context) {
 				encryptionPwd = pwd
 			}
 
-			var dbPwd string
-			{ // 取得 db內的密碼 // TODO
-
+			var gormDB *gorm.DB
+			{ //取得 db連線
+				var err error
+				if gormDB, err = db.GetConnection(); err != nil {
+					return "000100010014", err
+				}
 			}
 
-			if dbPwd != encryptionPwd { // 比對密碼
-				return "000100020004", nil
+			{ // 查詢指定帳戶是否存在
+				exist, err := repository.CheckAccountPwd(gormDB, input.UserRole, input.Username, encryptionPwd)
+				if err != nil || !exist {
+					return "000100020004", nil
+				}
 			}
 		}
 
-		{ // 產生新 session // TODO
+		var session string
+		{ // 產生新 session
+			var err error
+			session, err = auth.GenerateRandomSessionID()
+			if err != nil { // TODO
 
+			}
 		}
 
-		{ // 將新 session寫入 cookie // TODO
+		{ // 將新 session寫入 cookie
+			maxAge := 60 * 15 // maxAge單位: 秒 // TODO 寫入設定檔案
+			err := auth.SetSession(c, session, maxAge)
+			if err != nil { // TODO
 
+			}
 		}
 
-		{ // 刪除該用戶舊的 session // TODO
+		{ // 刪除該用戶在 redis內的舊 session // TODO
 
 		}
 
